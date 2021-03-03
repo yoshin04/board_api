@@ -26,6 +26,15 @@ let AppController = class AppController {
         //JwtTokenを返す
         return this.authService.login(user);
     }
+    /**
+     * @description JWT認証を用いたサンプルAPI
+     */
+    getProfile(req) {
+        // JwtStrategy.validate()で認証して返した値がreq.userに入ってくる
+        const user = req.user;
+        //認証に成功したユーザーの情報を返す
+        return req.user;
+    }
 };
 __decorate([
     common_1.UseGuards(passport_1.AuthGuard('local')) //passport-local戦略を付与
@@ -36,6 +45,15 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AppController.prototype, "login", null);
+__decorate([
+    common_1.UseGuards(passport_1.AuthGuard('jwt')) // passport-jwt戦略を付与
+    ,
+    common_1.Get('me'),
+    __param(0, common_1.Request()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], AppController.prototype, "getProfile", null);
 AppController = __decorate([
     common_1.Controller('api'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])

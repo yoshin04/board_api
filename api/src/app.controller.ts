@@ -23,5 +23,15 @@ export class AppController {
     //JwtTokenを返す
     return this.authService.login(user);
   }
-
+  /**
+   * @description JWT認証を用いたサンプルAPI
+   */
+  @UseGuards(AuthGuard('jwt')) // passport-jwt戦略を付与
+  @Get('me')
+  getProfile(@Request() req: { user: PasswordOmitUser }) {
+    // JwtStrategy.validate()で認証して返した値がreq.userに入ってくる
+    const user = req.user;
+    //認証に成功したユーザーの情報を返す
+    return req.user;
+  }
 }
