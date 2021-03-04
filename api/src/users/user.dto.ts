@@ -3,6 +3,3 @@ export class LoginDTO {
   password: string
 }
 
-export class SignUpDTO extends LoginDTO {
-  name: string;
-}

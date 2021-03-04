@@ -3,9 +3,8 @@ import { Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/entity/User';
-import { JwtPayload } from './auth.interface';
-
-type PasswordOmitUser = Omit<User, 'password'>;
+import { PasswordOmitUser } from 'src/types/password-omit';
+import { JwtPayload } from 'src/dto/auth.dto';
 
 @Injectable()
 export class AuthService {
@@ -23,20 +22,18 @@ export class AuthService {
 
     // DBに保存されているpasswordはハッシュ化されている事を想定しているので、
     // bcryptなどを使ってパスワードを判定する
-    if (user && bcrypt.compareSync(pass, user.password)) {
+    if (!user || !bcrypt.compareSync(pass, user.password)) {
       //password情報を外部に出さないようにする
-      const { password, ...result } = user;
-      return result;
+      return null;
     }
-
-    return null;
+    const { password, ...result } = user;
+    return result;
   }
- 
+
   //jwt tokenを返す
   async login(user: PasswordOmitUser) {
     // jwtにつけるPayload情報
     const payload: JwtPayload = { id: user.id };
-    console.log(payload);
     return {
       access_token: this.jwtService.sign(payload),
     };

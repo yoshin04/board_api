@@ -26,6 +26,8 @@ const common_1 = require("@nestjs/common");
 const users_service_1 = require("../users/users.service");
 const jwt_1 = require("@nestjs/jwt");
 const User_1 = require("../entity/User");
+const password_omit_1 = require("../types/password-omit");
+const auth_dto_1 = require("../dto/auth.dto");
 let AuthService = class AuthService {
     constructor(jwtService, usersService) {
         this.jwtService = jwtService;
@@ -36,18 +38,17 @@ let AuthService = class AuthService {
         const user = await this.usersService.findOne(email); // DBからUserを取得
         // DBに保存されているpasswordはハッシュ化されている事を想定しているので、
         // bcryptなどを使ってパスワードを判定する
-        if (user && bcrypt.compareSync(pass, user.password)) {
+        if (!user || !bcrypt.compareSync(pass, user.password)) {
             //password情報を外部に出さないようにする
-            const { password } = user, result = __rest(user, ["password"]);
-            return result;
+            return null;
         }
-        return null;
+        const { password } = user, result = __rest(user, ["password"]);
+        return result;
     }
     //jwt tokenを返す
     async login(user) {
         // jwtにつけるPayload情報
         const payload = { id: user.id };
-        console.log(payload);
         return {
             access_token: this.jwtService.sign(payload),
         };

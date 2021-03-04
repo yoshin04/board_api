@@ -11,11 +11,11 @@ export class UsersService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  async findOne(email: string): Promise<User | undefined> {
-    return this.userRepository.findOne({ email });
+  async findOne(email: string): Promise<User> {
+    return this.userRepository.findOneOrFail({ email });
   }
 
-  findAll(): Promise<User[] | undefined> {
+  async findAll(): Promise<User[] | undefined> {
     return this.userRepository.find();
   }
 
@@ -27,7 +27,7 @@ export class UsersService {
     const user = new User();
     const { name, email, password } = newUser;
     user.name = name;
-    user.password = bcrypt.hashSync(password, 15);
+    user.password = bcrypt.hashSync(password, parseInt(process.env.hashPassword));
     user.email = email;
     return await this.userRepository.save(user);
   }

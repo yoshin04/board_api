@@ -15,7 +15,7 @@ import { jwtConstants } from './constants';
     //JWTを使うための設定
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '30m' },
+      signOptions: { expiresIn: process.env.exp },
     }),
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy],

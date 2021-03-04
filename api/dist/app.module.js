@@ -26,24 +26,7 @@ AppModule = __decorate([
     common_1.Module({
         imports: [
             users_module_1.UsersModule,
-            typeorm_1.TypeOrmModule.forRoot({
-                type: 'mysql',
-                host: 'db',
-                port: 3306,
-                username: 'board_user',
-                password: 'password123',
-                database: 'board_db',
-                synchronize: true,
-                logging: false,
-                entities: ['dist/entity/**/*.js'],
-                migrations: ['dist/migration/**/*.js'],
-                subscribers: ['src/subscriber/**/*.ts'],
-                cli: {
-                    entitiesDir: 'src/entity',
-                    migrationsDir: 'src/migration',
-                    subscribersDir: 'src/subscriber',
-                },
-            }),
+            typeorm_1.TypeOrmModule.forRoot(),
             auth_module_1.AuthModule, //これがないと認証処理が動かない
         ],
         controllers: [app_controller_1.AppController],

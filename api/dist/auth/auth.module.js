@@ -25,7 +25,7 @@ AuthModule = __decorate([
             //JWTを使うための設定
             jwt_1.JwtModule.register({
                 secret: constants_1.jwtConstants.secret,
-                signOptions: { expiresIn: '30m' },
+                signOptions: { expiresIn: process.env.exp },
             }),
         ],
         providers: [auth_service_1.AuthService, local_strategy_1.LocalStrategy, jwt_strategy_1.JwtStrategy],

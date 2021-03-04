@@ -4,10 +4,12 @@ import {
   UseGuards,
   Post,
   Request,
+  Body,
 } from '@nestjs/common';
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from './entity/User';
+import { LoginDTO } from './dto/user.dto';
 
 type PasswordOmitUser = Omit<User, 'password'>;
 

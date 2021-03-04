@@ -15,6 +15,7 @@ const passport_jwt_1 = require("passport-jwt");
 const common_1 = require("@nestjs/common");
 const passport_1 = require("@nestjs/passport");
 const constants_1 = require("./constants");
+const auth_dto_1 = require("../dto/auth.dto");
 /**
  * @description JWTの認証処理を行うクラス
  */
