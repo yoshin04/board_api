@@ -5,8 +5,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { User } from 'src/entity/User';
-
-type PasswordOmitUser = Omit<User, 'password'>;
+import { PasswordOmitUser } from 'src/types/password-omit';
 
 /**
  * @description usernameとpasswordを使った認証処理を行うクラス

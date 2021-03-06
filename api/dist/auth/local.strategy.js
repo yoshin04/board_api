@@ -16,6 +16,7 @@ const passport_1 = require("@nestjs/passport");
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
 const User_1 = require("../entity/User");
+const password_omit_1 = require("../types/password-omit");
 /**
  * @description usernameとpasswordを使った認証処理を行うクラス
  */

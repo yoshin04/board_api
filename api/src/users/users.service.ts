@@ -15,6 +15,10 @@ export class UsersService {
     return this.userRepository.findOneOrFail({ email });
   }
 
+  async findById(tokenId: number): Promise<User> {
+    return await this.userRepository.findOne(tokenId);
+  }
+
   async findAll(): Promise<User[] | undefined> {
     return this.userRepository.find();
   }
@@ -27,7 +31,7 @@ export class UsersService {
     const user = new User();
     const { name, email, password } = newUser;
     user.name = name;
-    user.password = bcrypt.hashSync(password, parseInt(process.env.hashPassword));
+    user.password = bcrypt.hashSync(password, parseInt(process.env.SALT_ROUND));
     user.email = email;
     return await this.userRepository.save(user);
   }

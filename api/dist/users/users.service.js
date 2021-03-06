@@ -25,6 +25,9 @@ let UsersService = class UsersService {
     async findOne(email) {
         return this.userRepository.findOneOrFail({ email });
     }
+    async findById(tokenId) {
+        return await this.userRepository.findOne(tokenId);
+    }
     async findAll() {
         return this.userRepository.find();
     }
@@ -32,7 +35,7 @@ let UsersService = class UsersService {
         const user = new User_1.User();
         const { name, email, password } = newUser;
         user.name = name;
-        user.password = bcrypt.hashSync(password, parseInt(process.env.hashPassword));
+        user.password = bcrypt.hashSync(password, parseInt(process.env.SALT_ROUND));
         user.email = email;
         return await this.userRepository.save(user);
     }

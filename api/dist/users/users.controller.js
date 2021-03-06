@@ -21,11 +21,11 @@ let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
     }
-    signUp(req) {
-        return this.usersService.signUp(req);
+    async signUp(signUpDto) {
+        return await this.usersService.signUp(signUpDto);
     }
-    findAll() {
-        return this.usersService.findAll();
+    async findAll() {
+        return await this.usersService.findAll();
     }
 };
 __decorate([

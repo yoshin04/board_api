@@ -30,6 +30,14 @@ export class AuthService {
     return result;
   }
 
+  async validateToken(id: number) {
+    const user = await this.usersService.findById(id);
+    if (!user) {
+      return null;
+    }
+    return user;
+  }
+
   //jwt tokenを返す
   async login(user: PasswordOmitUser) {
     // jwtにつけるPayload情報

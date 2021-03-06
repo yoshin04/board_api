@@ -5,15 +5,15 @@ import { SignUpDto } from 'src/dto/signup.dto';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) { }
-  
+  constructor(private readonly usersService: UsersService) {}
+
   @Post('signup')
-  public signUp(@Body() req: SignUpDto): Promise<User> {
-    return this.usersService.signUp(req);
+  public async signUp(@Body() signUpDto: SignUpDto): Promise<User> {
+    return await this.usersService.signUp(signUpDto);
   }
 
   @Get('findAll')
-  public findAll(): Promise<User[]> {
-    return this.usersService.findAll();
+  public async findAll(): Promise<User[]> {
+    return await this.usersService.findAll();
   }
 }

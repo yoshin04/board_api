@@ -45,6 +45,13 @@ let AuthService = class AuthService {
         const { password } = user, result = __rest(user, ["password"]);
         return result;
     }
+    async validateToken(id) {
+        const user = await this.usersService.findById(id);
+        if (!user) {
+            return null;
+        }
+        return user;
+    }
     //jwt tokenを返す
     async login(user) {
         // jwtにつけるPayload情報
