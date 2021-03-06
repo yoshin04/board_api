@@ -12,7 +12,7 @@ export class UsersService {
   ) {}
 
   async findOne(email: string): Promise<User> {
-    return this.userRepository.findOneOrFail({ email });
+    return await this.userRepository.findOneOrFail({ email });
   }
 
   async findById(tokenId: number): Promise<User> {
@@ -20,7 +20,7 @@ export class UsersService {
   }
 
   async findAll(): Promise<User[] | undefined> {
-    return this.userRepository.find();
+    return await this.userRepository.find();
   }
 
   async signUp(newUser: {
