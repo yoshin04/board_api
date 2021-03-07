@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./api/Dockerfile.${NODE_ENV}
+    env_file:
+      - ./api/.env
+    depends_on:
+      - "db"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./api:/src
+      - ./src/node_modules
+    tty: true
+    container_name: board_api
+
+  db:
+    build:
+      context: .
+      dockerfile: ./db/Dockerfile
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      TZ: ${TZ}
+    restart: always
+    hostname: db
+    volumes:
+      - "board_dbdata:/var/lib/mysql"
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - 3306:3306
+    container_name: board_db
+
+volumes:
+  board_dbdata:
